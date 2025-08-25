@@ -1,3 +1,5 @@
+use clap::Parser;
+use clap_derive::Parser;
 use std::process::Command;
 
 #[derive(Debug)]
@@ -12,7 +14,15 @@ impl Commit {
     }
 }
 
+#[derive(Parser)]
+struct Cli {
+    #[arg(short, long)]
+    ancestry_path: Option<String>,
+}
+
 fn main() {
+    let cli = Cli::parse();
+
     let cmd = String::from_utf8(
         Command::new("git")
             .arg("log")
